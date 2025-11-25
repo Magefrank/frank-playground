@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensils, Sparkles, Play, Pause, RotateCcw, Home, Grid } from 'lucide-react';
+import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensils, Sparkles, Play, Pause, RotateCcw, Home, Grid, Soup, Leaf, Droplet } from 'lucide-react';
 
-// --- 数据配置 (现在是数组了) ---
+// --- 数据配置 ---
 const RECIPES = [
   {
     id: 'black-pepper-beef',
@@ -10,7 +10,6 @@ const RECIPES = [
     difficulty: "容易",
     time: "30 分钟",
     calories: "350 kcal",
-    themeColor: "orange", // 主题色
     description: "肉质滑嫩，黑椒味浓郁，洋葱清甜。这道家庭版做法绝对是下饭神器，每一口都是满满的幸福感。",
     ingredients: [
       { name: "牛肉", amount: "300g", note: "牛里脊/牛霖/上脑，逆纹切片" },
@@ -73,8 +72,70 @@ const RECIPES = [
       }
     ]
   },
-  // 你可以在这里添加更多菜谱，例如：
-  // { id: 'tomato-egg', title: '西红柿炒蛋', ... }
+  {
+    id: 'pork-cabbage-soup-cake',
+    title: "肉丝白菜汤年糕",
+    subtitle: "Frank's Winter Comfort",
+    difficulty: "简单",
+    time: "20 分钟",
+    calories: "400 kcal",
+    description: "肉丝嫩滑，汤底鲜香，年糕软糯。一道温暖人心的家常汤年糕，白胡椒粉是点睛之笔。",
+    ingredients: [
+      { name: "年糕片", amount: "300g", note: "宁波水磨年糕最佳" },
+      { name: "猪里脊", amount: "150g", note: "切细丝" },
+      { name: "大白菜", amount: "4-5片", note: "帮叶分离" },
+      { name: "姜片", amount: "2-3片", note: "爆锅用" }
+    ],
+    marinade: [
+      { name: "料酒", amount: "1汤匙" },
+      { name: "生抽", amount: "1汤匙" },
+      { name: "淀粉", amount: "1茶匙" },
+      { name: "食用油", amount: "少许", note: "封油防粘" }
+    ],
+    sauce: [
+      { name: "高汤/浓汤宝", amount: "适量", note: "清水亦可，高汤更鲜" },
+      { name: "盐", amount: "适量" },
+      { name: "白胡椒粉", amount: "少许", note: "灵魂提鲜" },
+      { name: "香油", amount: "几滴", note: "出锅前加" }
+    ],
+    steps: [
+      {
+        title: "备料腌肉 (基础)",
+        desc: "里脊切丝加腌料抓匀腌制15分钟。白菜切片，叶撕小块。年糕若硬先温水泡一下。",
+        timer: 900, // 15 mins
+        icon: <Utensils className="w-8 h-8 text-blue-300" />,
+        tips: "肉丝一定要封油，下锅才不会粘连；年糕泡一下更容易煮透。"
+      },
+      {
+        title: "滑炒肉丝 (定型)",
+        desc: "油温五成热爆香姜片，下肉丝快速滑炒至变色（8成熟）立即盛出备用。",
+        timer: 60,
+        icon: <Flame className="w-8 h-8 text-orange-500" />,
+        tips: "肉丝不要炒太久，变色就盛出来，保持嫩度。"
+      },
+      {
+        title: "炒帮煮汤 (鲜底)",
+        desc: "底油炒软白菜帮，激发甜味。倒入足量开水或高汤煮沸。",
+        timer: 120,
+        icon: <Soup className="w-8 h-8 text-yellow-500" />,
+        tips: "先炒白菜帮可以激发蔬菜的甜味，汤底更鲜。"
+      },
+      {
+        title: "煮年糕 (软糯)",
+        desc: "汤开后下年糕片，保持中大火煮3-5分钟，直到年糕变软。",
+        timer: 240, // 4 mins
+        icon: <Clock className="w-8 h-8 text-emerald-400" />,
+        tips: "煮年糕时不要频繁搅动，防止煮烂，用勺背轻轻推两下就行。"
+      },
+      {
+        title: "合体调味 (出锅)",
+        desc: "下白菜叶和肉丝，加盐和白胡椒粉调味。煮至菜叶变软即可出锅，滴入香油。",
+        timer: 90,
+        icon: <Leaf className="w-8 h-8 text-green-400" />,
+        tips: "白胡椒粉去腥提鲜，是这道汤的灵魂，千万别省！"
+      }
+    ]
+  }
 ];
 
 // --- 组件部分 ---
@@ -243,7 +304,7 @@ const StepCard = ({ step, stepIndex, totalSteps, nextStep, prevStep }) => {
   );
 };
 
-// --- 新增：首页菜谱卡片组件 ---
+// --- 首页菜谱卡片组件 ---
 const RecipeCard = ({ recipe, onClick }) => {
   return (
     <div 
@@ -283,8 +344,8 @@ const RecipeCard = ({ recipe, onClick }) => {
 };
 
 export default function App() {
-  const [selectedRecipe, setSelectedRecipe] = useState(null); // 如果为 null，显示首页列表
-  const [view, setView] = useState('home'); // recipe-internal views: home, ingredients, cooking, done
+  const [selectedRecipe, setSelectedRecipe] = useState(null); 
+  const [view, setView] = useState('home'); 
   const [currentStep, setCurrentStep] = useState(0);
 
   // Background particle effect
@@ -432,8 +493,8 @@ export default function App() {
 
                 <div className="bg-slate-900/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-slate-800 shadow-xl mb-8">
                   <IngredientsList title="主料与配菜" items={selectedRecipe.ingredients} />
-                  <IngredientsList title="牛肉腌料 (给肉喝饱水)" items={selectedRecipe.marinade} />
-                  <IngredientsList title="黑椒酱汁 (灵魂)" items={selectedRecipe.sauce} />
+                  <IngredientsList title="腌料 (嫩肉关键)" items={selectedRecipe.marinade} />
+                  <IngredientsList title="汤底与调味 (鲜香灵魂)" items={selectedRecipe.sauce} />
                 </div>
 
                 <div className="flex justify-center">
@@ -478,7 +539,7 @@ export default function App() {
                 
                 <h2 className="text-4xl font-bold text-white mb-4">大功告成！</h2>
                 <p className="text-xl text-slate-300 max-w-md mx-auto mb-10">
-                  盛上一碗热气腾腾的米饭，尽情享用这道香气扑鼻的{selectedRecipe.title}吧！
+                  盛上一碗热气腾腾的{selectedRecipe.title}，享受这温暖的时刻吧！
                 </p>
 
                 <div className="flex gap-4">
