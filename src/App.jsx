@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensils, Sparkles, Play, Pause, RotateCcw, Home, Grid, Soup, Leaf, Droplet } from 'lucide-react';
+import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensils, Sparkles, Play, Pause, RotateCcw, Home, Grid, Soup, Leaf, Droplet, Layers } from 'lucide-react';
 
 // --- 数据配置 ---
 const RECIPES = [
@@ -133,6 +133,68 @@ const RECIPES = [
         timer: 90,
         icon: <Leaf className="w-8 h-8 text-green-400" />,
         tips: "白胡椒粉去腥提鲜，是这道汤的灵魂，千万别省！"
+      }
+    ]
+  },
+  {
+    id: 'kimchi-pork-belly',
+    title: "泡菜炒五花肉",
+    subtitle: "Korean Classic Twist",
+    difficulty: "中等",
+    time: "25 分钟",
+    calories: "500 kcal",
+    description: "酸辣开胃，五花肉焦香不腻，泡菜爽脆。这道精简版去除了葱洋葱，纯粹享受肉与泡菜的灵魂碰撞。",
+    ingredients: [
+      { name: "五花肉", amount: "400g", note: "冷冻后切薄片最佳" },
+      { name: "韩国泡菜", amount: "200g", note: "老泡菜味更浓，切小块" },
+      { name: "大蒜", amount: "4瓣", note: "切末，增香担当" }
+    ],
+    marinade: [
+      { name: "泡菜汁", amount: "3大勺", note: "这道菜的灵魂" },
+      { name: "韩式辣酱", amount: "1大勺" },
+      { name: "生抽", amount: "1大勺" },
+      { name: "料酒", amount: "1大勺" },
+      { name: "白糖/蜂蜜", amount: "1小勺", note: "平衡酸味" }
+    ],
+    sauce: [
+      { name: "香油", amount: "1小勺", note: "出锅淋入" },
+      { name: "熟白芝麻", amount: "适量", note: "点缀增香" }
+    ],
+    steps: [
+      {
+        title: "备料处理 (关键)",
+        desc: "五花肉切薄片（冷冻一下更好切）。泡菜切适口大小。记得留出3大勺泡菜汁，这可是灵魂！",
+        timer: 0,
+        icon: <Layers className="w-8 h-8 text-red-300" />,
+        tips: "一定要用发酵比较久的酸泡菜，味道才够劲。"
+      },
+      {
+        title: "干煸五花肉 (逼油)",
+        desc: "平底锅不放油，中小火直接下五花肉。慢慢煎至两面金黄焦香，逼出多余油脂（倒掉一部分油）。",
+        timer: 300, // 5 mins slow fry
+        icon: <Flame className="w-8 h-8 text-orange-500" />,
+        tips: "必须要把肉煸到焦黄，这样吃起来才酥脆不腻。"
+      },
+      {
+        title: "爆香融合 (增味)",
+        desc: "利用底油爆香蒜末，放入泡菜转中大火快速翻炒，让泡菜充分吸收猪油的香气。",
+        timer: 120,
+        icon: <Sparkles className="w-8 h-8 text-red-500" />,
+        tips: "猪油炒泡菜是绝配，香味瞬间提升一个档次。"
+      },
+      {
+        title: "调味焖煮 (入味)",
+        desc: "淋入料酒、生抽、辣酱、糖和关键的泡菜汁。盖盖小火焖煮2-3分钟，让肉吸满汤汁。",
+        timer: 180, // 3 mins simmer
+        icon: <Clock className="w-8 h-8 text-yellow-500" />,
+        tips: "焖煮能让味道融合，肉质也更入味。"
+      },
+      {
+        title: "收汁出锅 (点睛)",
+        desc: "开盖大火收汁，关火后淋入香油，撒上白芝麻翻炒均匀装盘。",
+        timer: 30,
+        icon: <CheckCircle className="w-8 h-8 text-green-400" />,
+        tips: "香油一定要关火后再放，保留最大的香气。"
       }
     ]
   }
@@ -492,9 +554,9 @@ export default function App() {
                 <p className="text-slate-400 mb-8">点击划掉已经准备好的材料</p>
 
                 <div className="bg-slate-900/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-slate-800 shadow-xl mb-8">
-                  <IngredientsList title="主料与配菜" items={selectedRecipe.ingredients} />
-                  <IngredientsList title="腌料 (嫩肉关键)" items={selectedRecipe.marinade} />
-                  <IngredientsList title="汤底与调味 (鲜香灵魂)" items={selectedRecipe.sauce} />
+                  <IngredientsList title="主料" items={selectedRecipe.ingredients} />
+                  <IngredientsList title="调味酱汁 (灵魂)" items={selectedRecipe.marinade} />
+                  <IngredientsList title="出锅点缀" items={selectedRecipe.sauce} />
                 </div>
 
                 <div className="flex justify-center">
