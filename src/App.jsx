@@ -207,7 +207,7 @@ const StepCard = ({ step, stepIndex, totalSteps, nextStep, prevStep }) => {
           )}
 
           {step.timer > 0 && (
-             <CountdownTimer initialSeconds={step.timer} />
+             <CountdownTimer key={stepIndex} initialSeconds={step.timer} />
           )}
         </div>
       </div>
