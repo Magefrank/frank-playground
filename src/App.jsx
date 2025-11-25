@@ -1,75 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensils, Sparkles, Play, Pause, RotateCcw } from 'lucide-react';
+import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensils, Sparkles, Play, Pause, RotateCcw, Home, Grid } from 'lucide-react';
 
-// --- 数据配置 (Frank 的家庭版攻略) ---
-const RECIPE = {
-  title: "洋葱黑椒牛肉",
-  subtitle: "Frank's Kitchen Special",
-  difficulty: "容易",
-  time: "30 分钟",
-  calories: "350 kcal",
-  description: "肉质滑嫩，黑椒味浓郁，洋葱清甜。这道家庭版做法绝对是下饭神器，每一口都是满满的幸福感。",
-  ingredients: [
-    { name: "牛肉", amount: "300g", note: "牛里脊/牛霖/上脑，逆纹切片" },
-    { name: "洋葱", amount: "1个", note: "中等大小，切粗丝或块" },
-    { name: "大蒜", amount: "3-4瓣", note: "切片" },
-    { name: "食用油", amount: "适量", note: "炒菜用" }
-  ],
-  marinade: [
-    { name: "生抽", amount: "1汤匙" },
-    { name: "老抽", amount: "半茶匙", note: "上色关键" },
-    { name: "料酒", amount: "1汤匙" },
-    { name: "蚝油", amount: "1汤匙" },
-    { name: "清水", amount: "2汤匙", note: "让肉喝饱水" },
-    { name: "玉米淀粉", amount: "1汤匙", note: "锁水" },
-    { name: "食用油", amount: "1汤匙", note: "最后封油" }
-  ],
-  sauce: [
-    { name: "黑胡椒粉", amount: "1-2汤匙", note: "现磨最佳，根据口味调整" },
-    { name: "蚝油", amount: "1汤匙" },
-    { name: "生抽", amount: "1汤匙" },
-    { name: "白糖", amount: "1茶匙", note: "提鲜平衡" },
-    { name: "清水/高汤", amount: "5汤匙" },
-    { name: "玉米淀粉", amount: "1茶匙" }
-  ],
-  steps: [
-    {
-      title: "处理牛肉 (嫩滑关键)",
-      desc: "逆纹切片是基石！加生抽、老抽、料酒、蚝油抓匀发粘。分次加入2汤匙水抓捏让肉'喝饱水'。加淀粉裹匀，最后淋油封住水分。",
-      timer: 900, // 15 mins
-      icon: <Beef className="w-8 h-8 text-rose-400" />,
-      tips: "一定要最后封油，这样下锅容易滑散，口感也嫩。"
-    },
-    {
-      title: "备料调酱 (防手忙脚乱)",
-      desc: "洋葱切粗丝。取碗将黑胡椒粉、蚝油、生抽、白糖、清水、淀粉混合均匀。提前调好酱汁是成功的捷径。",
-      timer: 0,
-      icon: <Utensils className="w-8 h-8 text-yellow-400" />,
-      tips: "黑胡椒强烈建议用现磨颗粒，风味远比粉末浓郁。"
-    },
-    {
-      title: "滑炒牛肉 (快炒快出)",
-      desc: "油比平时多一点，烧至五成热（筷子周围细小气泡）。下牛肉快速滑散，变色约8成熟立即盛出沥油。",
-      timer: 60, // Fast stir fry
-      icon: <Flame className="w-8 h-8 text-orange-500" />,
-      tips: "千万别久炒！变色就捞，余温会让它继续熟。"
-    },
-    {
-      title: "爆香合炒 (焦糖香气)",
-      desc: "底油爆香蒜片，下洋葱中大火炒至微透明、边缘焦黄（此时最甜）。倒入牛肉快速翻炒均匀。",
-      timer: 90,
-      icon: <Sparkles className="w-8 h-8 text-purple-400" />,
-      tips: "洋葱炒出焦糖色才好吃，不要炒得太生或太烂。"
-    },
-    {
-      title: "淋汁收尾 (大火收汁)",
-      desc: "酱汁再次搅拌（防沉淀），沿锅边淋入。开大火快速翻炒，让酱汁裹满每一片肉和洋葱，浓稠油亮即出锅。",
-      timer: 30,
-      icon: <CheckCircle className="w-8 h-8 text-green-400" />,
-      tips: "动作要快，姿势要帅，酱汁裹匀马上关火。"
-    }
-  ]
-};
+// --- 数据配置 (现在是数组了) ---
+const RECIPES = [
+  {
+    id: 'black-pepper-beef',
+    title: "洋葱黑椒牛肉",
+    subtitle: "Frank's Kitchen Special",
+    difficulty: "容易",
+    time: "30 分钟",
+    calories: "350 kcal",
+    themeColor: "orange", // 主题色
+    description: "肉质滑嫩，黑椒味浓郁，洋葱清甜。这道家庭版做法绝对是下饭神器，每一口都是满满的幸福感。",
+    ingredients: [
+      { name: "牛肉", amount: "300g", note: "牛里脊/牛霖/上脑，逆纹切片" },
+      { name: "洋葱", amount: "1个", note: "中等大小，切粗丝或块" },
+      { name: "大蒜", amount: "3-4瓣", note: "切片" },
+      { name: "食用油", amount: "适量", note: "炒菜用" }
+    ],
+    marinade: [
+      { name: "生抽", amount: "1汤匙" },
+      { name: "老抽", amount: "半茶匙", note: "上色关键" },
+      { name: "料酒", amount: "1汤匙" },
+      { name: "蚝油", amount: "1汤匙" },
+      { name: "清水", amount: "2汤匙", note: "让肉喝饱水" },
+      { name: "玉米淀粉", amount: "1汤匙", note: "锁水" },
+      { name: "食用油", amount: "1汤匙", note: "最后封油" }
+    ],
+    sauce: [
+      { name: "黑胡椒粉", amount: "1-2汤匙", note: "现磨最佳，根据口味调整" },
+      { name: "蚝油", amount: "1汤匙" },
+      { name: "生抽", amount: "1汤匙" },
+      { name: "白糖", amount: "1茶匙", note: "提鲜平衡" },
+      { name: "清水/高汤", amount: "5汤匙" },
+      { name: "玉米淀粉", amount: "1茶匙" }
+    ],
+    steps: [
+      {
+        title: "处理牛肉 (嫩滑关键)",
+        desc: "逆纹切片是基石！加生抽、老抽、料酒、蚝油抓匀发粘。分次加入2汤匙水抓捏让肉'喝饱水'。加淀粉裹匀，最后淋油封住水分。",
+        timer: 900, // 15 mins
+        icon: <Beef className="w-8 h-8 text-rose-400" />,
+        tips: "一定要最后封油，这样下锅容易滑散，口感也嫩。"
+      },
+      {
+        title: "备料调酱 (防手忙脚乱)",
+        desc: "洋葱切粗丝。取碗将黑胡椒粉、蚝油、生抽、白糖、清水、淀粉混合均匀。提前调好酱汁是成功的捷径。",
+        timer: 0,
+        icon: <Utensils className="w-8 h-8 text-yellow-400" />,
+        tips: "黑胡椒强烈建议用现磨颗粒，风味远比粉末浓郁。"
+      },
+      {
+        title: "滑炒牛肉 (快炒快出)",
+        desc: "油比平时多一点，烧至五成热（筷子周围细小气泡）。下牛肉快速滑散，变色约8成熟立即盛出沥油。",
+        timer: 60, // Fast stir fry
+        icon: <Flame className="w-8 h-8 text-orange-500" />,
+        tips: "千万别久炒！变色就捞，余温会让它继续熟。"
+      },
+      {
+        title: "爆香合炒 (焦糖香气)",
+        desc: "底油爆香蒜片，下洋葱中大火炒至微透明、边缘焦黄（此时最甜）。倒入牛肉快速翻炒均匀。",
+        timer: 90,
+        icon: <Sparkles className="w-8 h-8 text-purple-400" />,
+        tips: "洋葱炒出焦糖色才好吃，不要炒得太生或太烂。"
+      },
+      {
+        title: "淋汁收尾 (大火收汁)",
+        desc: "酱汁再次搅拌（防沉淀），沿锅边淋入。开大火快速翻炒，让酱汁裹满每一片肉和洋葱，浓稠油亮即出锅。",
+        timer: 30,
+        icon: <CheckCircle className="w-8 h-8 text-green-400" />,
+        tips: "动作要快，姿势要帅，酱汁裹匀马上关火。"
+      }
+    ]
+  },
+  // 你可以在这里添加更多菜谱，例如：
+  // { id: 'tomato-egg', title: '西红柿炒蛋', ... }
+];
 
 // --- 组件部分 ---
 
@@ -237,8 +243,48 @@ const StepCard = ({ step, stepIndex, totalSteps, nextStep, prevStep }) => {
   );
 };
 
+// --- 新增：首页菜谱卡片组件 ---
+const RecipeCard = ({ recipe, onClick }) => {
+  return (
+    <div 
+      onClick={onClick}
+      className="group cursor-pointer bg-slate-800/50 hover:bg-slate-800/80 border border-slate-700 hover:border-orange-500/50 rounded-3xl p-6 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-900/20 relative overflow-hidden"
+    >
+      <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl -mr-10 -mt-10 transition-all group-hover:bg-orange-500/20"></div>
+      
+      <div className="relative z-10">
+        <div className="flex justify-between items-start mb-4">
+          <div className="p-3 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl shadow-lg">
+            <ChefHat className="text-white w-6 h-6" />
+          </div>
+          <span className="text-xs font-bold px-3 py-1 bg-slate-900 rounded-full text-slate-400 border border-slate-700">
+            {recipe.difficulty}
+          </span>
+        </div>
+        
+        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">
+          {recipe.title}
+        </h3>
+        <p className="text-slate-400 text-sm line-clamp-2 mb-6 h-10">
+          {recipe.description}
+        </p>
+
+        <div className="flex items-center space-x-4 text-sm text-slate-500">
+          <div className="flex items-center">
+            <Clock className="w-4 h-4 mr-1 text-orange-500" /> {recipe.time}
+          </div>
+          <div className="flex items-center">
+            <Flame className="w-4 h-4 mr-1 text-red-500" /> {recipe.calories}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
-  const [view, setView] = useState('home'); // home, ingredients, cooking, done
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // 如果为 null，显示首页列表
+  const [view, setView] = useState('home'); // recipe-internal views: home, ingredients, cooking, done
   const [currentStep, setCurrentStep] = useState(0);
 
   // Background particle effect
@@ -248,6 +294,13 @@ export default function App() {
     animationDelay: `${Math.random() * 5}s`,
     opacity: Math.random() * 0.3
   }));
+
+  // 处理返回首页
+  const goBackToMenu = () => {
+    setSelectedRecipe(null);
+    setView('home');
+    setCurrentStep(0);
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-orange-500 selection:text-white overflow-x-hidden relative">
@@ -270,7 +323,7 @@ export default function App() {
         <header className="flex justify-between items-center mb-12 animate-fade-in-down">
           <div 
             className="flex items-center space-x-2 cursor-pointer group"
-            onClick={() => { setView('home'); setCurrentStep(0); }}
+            onClick={goBackToMenu}
           >
             <div className="bg-gradient-to-br from-orange-500 to-red-600 p-2 rounded-lg transform group-hover:rotate-12 transition-transform">
               <ChefHat size={24} className="text-white" />
@@ -279,129 +332,166 @@ export default function App() {
               Frank<span className="text-orange-500">厨房</span>
             </span>
           </div>
-          {view !== 'home' && (
+          
+          {selectedRecipe && (
              <button 
-               onClick={() => setView('home')}
-               className="text-sm font-medium text-slate-500 hover:text-white transition-colors"
+               onClick={goBackToMenu}
+               className="flex items-center text-sm font-medium text-slate-500 hover:text-white transition-colors bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700/50 hover:bg-slate-800"
              >
-               退出烹饪
+               <Grid className="w-4 h-4 mr-2" /> 
+               菜谱列表
              </button>
           )}
         </header>
 
-        {/* --- VIEW: HOME --- */}
-        {view === 'home' && (
-          <div className="flex-1 flex flex-col justify-center items-center text-center animate-fade-in-up">
-            <div className="inline-block px-4 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-sm font-bold mb-6 tracking-wide uppercase">
-              Frank's Kitchen Recipe
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-500">绝味</span>
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 animate-gradient-x">
-                {RECIPE.title}
-              </span>
-            </h1>
-            
-            <p className="text-lg text-slate-400 max-w-lg mx-auto mb-10 leading-relaxed">
-              {RECIPE.description}
-            </p>
+        {/* --- 场景 1: 首页菜谱列表 (No Recipe Selected) --- */}
+        {!selectedRecipe && (
+          <div className="animate-fade-in-up">
+             <div className="text-center mb-16">
+                <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
+                  今天想吃<span className="text-orange-500">点什么？</span>
+                </h1>
+                <p className="text-slate-400 text-lg">
+                  Frank 的私房菜谱，每一道都是经过反复验证的美味。
+                </p>
+             </div>
 
-            <div className="flex flex-wrap justify-center gap-6 mb-12">
-              <div className="flex items-center text-slate-300">
-                <Clock className="w-5 h-5 mr-2 text-orange-500" />
-                <span>{RECIPE.time}</span>
-              </div>
-              <div className="flex items-center text-slate-300">
-                <Flame className="w-5 h-5 mr-2 text-red-500" />
-                <span>{RECIPE.calories}</span>
-              </div>
-              <div className="flex items-center text-slate-300">
-                <Sparkles className="w-5 h-5 mr-2 text-yellow-500" />
-                <span>{RECIPE.difficulty}</span>
-              </div>
-            </div>
-
-            <button 
-              onClick={() => setView('ingredients')}
-              className="group relative px-10 py-5 bg-white text-slate-900 font-black text-xl rounded-full overflow-hidden hover:scale-105 transition-transform duration-300"
-            >
-              <span className="relative z-10 flex items-center">
-                开始备菜 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-            </button>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {RECIPES.map(recipe => (
+                  <RecipeCard 
+                    key={recipe.id} 
+                    recipe={recipe} 
+                    onClick={() => setSelectedRecipe(recipe)} 
+                  />
+                ))}
+                
+                {/* 占位符卡片，展示未来可能性 */}
+                <div className="border border-dashed border-slate-800 bg-slate-900/30 rounded-3xl p-6 flex flex-col justify-center items-center text-slate-600 min-h-[200px]">
+                   <Sparkles className="mb-4 w-8 h-8 opacity-50" />
+                   <p className="font-medium">更多美味，敬请期待...</p>
+                </div>
+             </div>
           </div>
         )}
 
-        {/* --- VIEW: INGREDIENTS --- */}
-        {view === 'ingredients' && (
-          <div className="animate-fade-in-up max-w-2xl mx-auto w-full">
-            <h2 className="text-3xl font-bold text-white mb-2">准备食材</h2>
-            <p className="text-slate-400 mb-8">点击划掉已经准备好的材料</p>
+        {/* --- 场景 2: 具体的菜谱详情 (Recipe Selected) --- */}
+        {selectedRecipe && (
+          <>
+            {/* --- VIEW: HOME (Recipe Intro) --- */}
+            {view === 'home' && (
+              <div className="flex-1 flex flex-col justify-center items-center text-center animate-fade-in-up">
+                <div className="inline-block px-4 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 text-sm font-bold mb-6 tracking-wide uppercase">
+                  {selectedRecipe.subtitle}
+                </div>
+                
+                <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-tight">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-500">绝味</span>
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 animate-gradient-x">
+                    {selectedRecipe.title}
+                  </span>
+                </h1>
+                
+                <p className="text-lg text-slate-400 max-w-lg mx-auto mb-10 leading-relaxed">
+                  {selectedRecipe.description}
+                </p>
 
-            <div className="bg-slate-900/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-slate-800 shadow-xl mb-8">
-              <IngredientsList title="主料与配菜" items={RECIPE.ingredients} />
-              <IngredientsList title="牛肉腌料 (给肉喝饱水)" items={RECIPE.marinade} />
-              <IngredientsList title="黑椒酱汁 (灵魂)" items={RECIPE.sauce} />
-            </div>
+                <div className="flex flex-wrap justify-center gap-6 mb-12">
+                  <div className="flex items-center text-slate-300">
+                    <Clock className="w-5 h-5 mr-2 text-orange-500" />
+                    <span>{selectedRecipe.time}</span>
+                  </div>
+                  <div className="flex items-center text-slate-300">
+                    <Flame className="w-5 h-5 mr-2 text-red-500" />
+                    <span>{selectedRecipe.calories}</span>
+                  </div>
+                  <div className="flex items-center text-slate-300">
+                    <Sparkles className="w-5 h-5 mr-2 text-yellow-500" />
+                    <span>{selectedRecipe.difficulty}</span>
+                  </div>
+                </div>
 
-            <div className="flex justify-center">
-              <button 
-                onClick={() => setView('cooking')}
-                className="w-full md:w-auto px-12 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-2xl shadow-lg shadow-orange-900/50 transition-all transform active:scale-95 flex items-center justify-center"
-              >
-                <Flame className="mr-2" /> 进入烹饪模式
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* --- VIEW: COOKING --- */}
-        {view === 'cooking' && (
-          <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col justify-center">
-            <StepCard 
-              step={RECIPE.steps[currentStep]} 
-              stepIndex={currentStep}
-              totalSteps={RECIPE.steps.length}
-              nextStep={() => {
-                if (currentStep < RECIPE.steps.length - 1) {
-                  setCurrentStep(c => c + 1);
-                } else {
-                  setView('done');
-                }
-              }}
-              prevStep={() => setCurrentStep(c => c - 1)}
-            />
-          </div>
-        )}
-
-        {/* --- VIEW: DONE --- */}
-        {view === 'done' && (
-          <div className="flex-1 flex flex-col justify-center items-center text-center animate-fade-in-up">
-            <div className="relative mb-8">
-              <div className="absolute inset-0 bg-orange-500 blur-3xl opacity-20 rounded-full animate-pulse"></div>
-              <div className="relative bg-slate-800 p-8 rounded-full border-4 border-orange-500 shadow-2xl">
-                <Utensils size={64} className="text-white" />
+                <button 
+                  onClick={() => setView('ingredients')}
+                  className="group relative px-10 py-5 bg-white text-slate-900 font-black text-xl rounded-full overflow-hidden hover:scale-105 transition-transform duration-300"
+                >
+                  <span className="relative z-10 flex items-center">
+                    开始备菜 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                </button>
               </div>
-            </div>
-            
-            <h2 className="text-4xl font-bold text-white mb-4">大功告成！</h2>
-            <p className="text-xl text-slate-300 max-w-md mx-auto mb-10">
-              盛上一碗热气腾腾的米饭，尽情享用这道香气扑鼻的洋葱黑椒牛肉吧！
-            </p>
+            )}
 
-            <div className="flex gap-4">
-              <button 
-                onClick={() => { setView('home'); setCurrentStep(0); }}
-                className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-colors"
-              >
-                返回首页
-              </button>
-            </div>
-          </div>
+            {/* --- VIEW: INGREDIENTS --- */}
+            {view === 'ingredients' && (
+              <div className="animate-fade-in-up max-w-2xl mx-auto w-full">
+                <h2 className="text-3xl font-bold text-white mb-2">准备食材</h2>
+                <p className="text-slate-400 mb-8">点击划掉已经准备好的材料</p>
+
+                <div className="bg-slate-900/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-slate-800 shadow-xl mb-8">
+                  <IngredientsList title="主料与配菜" items={selectedRecipe.ingredients} />
+                  <IngredientsList title="牛肉腌料 (给肉喝饱水)" items={selectedRecipe.marinade} />
+                  <IngredientsList title="黑椒酱汁 (灵魂)" items={selectedRecipe.sauce} />
+                </div>
+
+                <div className="flex justify-center">
+                  <button 
+                    onClick={() => setView('cooking')}
+                    className="w-full md:w-auto px-12 py-4 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-2xl shadow-lg shadow-orange-900/50 transition-all transform active:scale-95 flex items-center justify-center"
+                  >
+                    <Flame className="mr-2" /> 进入烹饪模式
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* --- VIEW: COOKING --- */}
+            {view === 'cooking' && (
+              <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col justify-center">
+                <StepCard 
+                  step={selectedRecipe.steps[currentStep]} 
+                  stepIndex={currentStep}
+                  totalSteps={selectedRecipe.steps.length}
+                  nextStep={() => {
+                    if (currentStep < selectedRecipe.steps.length - 1) {
+                      setCurrentStep(c => c + 1);
+                    } else {
+                      setView('done');
+                    }
+                  }}
+                  prevStep={() => setCurrentStep(c => c - 1)}
+                />
+              </div>
+            )}
+
+            {/* --- VIEW: DONE --- */}
+            {view === 'done' && (
+              <div className="flex-1 flex flex-col justify-center items-center text-center animate-fade-in-up">
+                <div className="relative mb-8">
+                  <div className="absolute inset-0 bg-orange-500 blur-3xl opacity-20 rounded-full animate-pulse"></div>
+                  <div className="relative bg-slate-800 p-8 rounded-full border-4 border-orange-500 shadow-2xl">
+                    <Utensils size={64} className="text-white" />
+                  </div>
+                </div>
+                
+                <h2 className="text-4xl font-bold text-white mb-4">大功告成！</h2>
+                <p className="text-xl text-slate-300 max-w-md mx-auto mb-10">
+                  盛上一碗热气腾腾的米饭，尽情享用这道香气扑鼻的{selectedRecipe.title}吧！
+                </p>
+
+                <div className="flex gap-4">
+                  <button 
+                    onClick={goBackToMenu}
+                    className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-colors"
+                  >
+                    返回菜单
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
 
       </div>
