@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensils, Sparkles, Play, Pause, RotateCcw, Home, Grid, Soup, Leaf, Droplet, Layers, X } from 'lucide-react';
 
-// --- 数据配置 (保持不变) ---
+// --- 数据配置 ---
 const RECIPES = [
   {
     id: 'black-pepper-beef',
@@ -195,6 +195,70 @@ const RECIPES = [
         timer: 30,
         icon: <CheckCircle className="w-7 h-7 text-[#7a8a68]" />,
         tips: "香油一定要关火后再放，保留最大的香气。"
+      }
+    ]
+  },
+  {
+    id: 'sweet-sour-ribs-pro',
+    title: "经典炒糖色版糖醋排骨",
+    subtitle: "Caramelized Pork Ribs",
+    difficulty: "中等",
+    time: "60 分钟",
+    calories: "680 kcal",
+    description: "先炒糖色，后调味。用炒好的糖色为排骨上色和奠定风味基础，最后补醋保留酸香。色泽红亮，风味醇厚。",
+    ingredients: [
+      { name: "猪肋排", amount: "500g", note: "斩小段，冷水浸泡" },
+      { name: "生姜", amount: "4-5片", note: "去腥" },
+      { name: "大蒜", amount: "3瓣", note: "拍扁" },
+      { name: "熟白芝麻", amount: "少许", note: "装饰" }
+    ],
+    marinade: [ // 炒糖色及调味
+      { name: "冰糖", amount: "40-50g", note: "颜色更亮" },
+      { name: "食用油", amount: "1汤匙", note: "润锅用" },
+      { name: "料酒", amount: "1.5汤匙", note: "去腥" },
+      { name: "生抽", amount: "2汤匙", note: "提鲜" },
+      { name: "老抽", amount: "半汤匙", note: "辅助上色" }
+    ],
+    sauce: [ // 关键及其他
+      { name: "香醋", amount: "3汤匙", note: "最后放！" },
+      { name: "开水", amount: "足量", note: "必须没过排骨" },
+      { name: "小葱", amount: "少许", note: "葱花装饰" }
+    ],
+    steps: [
+      {
+        title: "预处理 (净排)",
+        desc: "排骨冷水浸泡30分钟去血水。冷水下锅加姜葱料酒，煮沸撇沫，煮3-5分钟。捞出温水洗净，彻底沥干（防溅油）。",
+        timer: 300, 
+        icon: <Droplet className="w-7 h-7 text-[#5c554b]" />,
+        tips: "一定要沥干水分，不然等下炒糖色下锅时油会溅得很厉害！"
+      },
+      {
+        title: "炒糖色 (核心)",
+        desc: "油润锅转中小火，下冰糖不停搅动。观察：融化->冒大泡->转琥珀色->冒细密金黄小泡。立刻进行下一步！",
+        timer: 180, // 估算炒糖色时间
+        icon: <Flame className="w-7 h-7 text-[#c47e5a]" />,
+        tips: "糖色转瞬即逝，冒细密小泡是最佳时机。炒老了会发苦，宁嫩勿老。"
+      },
+      {
+        title: "上色调味 (定基调)",
+        desc: "迅速倒入排骨快炒裹上糖色。下姜蒜煸香。沿锅边烹入料酒，加生抽、老抽翻炒至酱红色。",
+        timer: 90,
+        icon: <Sparkles className="w-7 h-7 text-[#dcb36d]" />,
+        tips: "这一步动作要快，让排骨均匀上色，激发出酱香味。"
+      },
+      {
+        title: "焖煮软烂 (入味)",
+        desc: "倒入足量开水（没过排骨，忌冷水）。大火烧开转小火，盖盖慢炖40-50分钟，直至筷子能轻松戳透。",
+        timer: 2700, // 45 mins
+        icon: <Clock className="w-7 h-7 text-[#8b8478]" />,
+        tips: "一定要加热水！冷水会让肉质收缩变柴。"
+      },
+      {
+        title: "补酸收汁 (成菜)",
+        desc: "开盖倒入香醋（补酸香）。转大火不停翻炒收汁。待汤汁浓稠如蜜、挂满排骨、锅底见油泡时关火。撒芝麻葱花。",
+        timer: 300,
+        icon: <CheckCircle className="w-7 h-7 text-[#7a8a68]" />,
+        tips: "醋最后放才能保留酸味，不被高温挥发掉。收汁要收干，才能红亮。"
       }
     ]
   }
