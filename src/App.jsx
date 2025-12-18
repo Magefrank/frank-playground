@@ -4,6 +4,75 @@ import { ChefHat, Flame, Clock, CheckCircle, ArrowRight, ArrowLeft, Beef, Utensi
 // --- 数据配置 ---
 const RECIPES = [
   {
+    id: 'mushroom-black-pepper-beef',
+    title: "白蘑菇黑椒牛肉",
+    subtitle: "Frank's Garlic Edition",
+    difficulty: "容易",
+    time: "30 分钟",
+    calories: "320 kcal",
+    description: "无洋葱版本,蒜香浓郁,蘑菇鲜美。用蒜末和白蘑菇的天然鲜味,打造出不输洋葱版的美味黑椒牛肉。",
+    ingredients: [
+      { name: "牛肉", amount: "300g", note: "牛里脊/牛腿肉,逆纹切片" },
+      { name: "白蘑菇", amount: "200g", note: "切片" },
+      { name: "大蒜", amount: "5-6瓣", note: "切末,是香气主角" },
+      { name: "青红椒", amount: "少许", note: "可选,点缀" }
+    ],
+    marinade: [
+      { name: "生抽", amount: "1汤匙" },
+      { name: "料酒", amount: "1汤匙" },
+      { name: "玉米淀粉", amount: "1茶匙" },
+      { name: "食用油", amount: "1汤匙", note: "封油锁水" },
+      { name: "黑胡椒粉", amount: "少许", note: "提前入味" }
+    ],
+    sauce: [
+      { name: "黑胡椒粉", amount: "1-1.5汤匙", note: "现磨最佳" },
+      { name: "蚝油", amount: "2.5汤匙", note: "增鲜提甜关键" },
+      { name: "生抽", amount: "1汤匙" },
+      { name: "老抽", amount: "半茶匙", note: "上色" },
+      { name: "白糖", amount: "2茶匙", note: "弥补甜味" },
+      { name: "料酒", amount: "1.5汤匙", note: "增香" },
+      { name: "清水", amount: "5-6汤匙" },
+      { name: "玉米淀粉", amount: "1茶匙", note: "勾芡用" }
+    ],
+    steps: [
+      {
+        title: "前期准备 (基础)",
+        desc: "牛肉逆纹切片,加腌料抓匀至发粘,最后封油。腌制20分钟。白蘑菇切片。酱汁提前调好(除淀粉),淀粉单独加1汤匙水化开。",
+        timer: 1200, // 20 mins
+        icon: <Beef className="w-7 h-7 text-[#5c554b]" />,
+        tips: "蒜末要切得细一些,这样更容易炒出香味。酱汁提前调好能让炒制过程更从容。"
+      },
+      {
+        title: "滑炒牛肉 (快准狠)",
+        desc: "热锅多油,油温五成热后下牛肉快速滑炒至变色(约8成熟),立即盛出沥油备用。",
+        timer: 60,
+        icon: <Flame className="w-7 h-7 text-[#c47e5a]" />,
+        tips: "牛肉千万别久炒,变色就盛出,保持嫩度是关键。"
+      },
+      {
+        title: "炒香蒜末 (灵魂步骤)",
+        desc: "用锅中底油,转中小火将蒜末慢慢炒至金黄色,香气充分释放。这是无洋葱版的香气主角,要有耐心。",
+        timer: 90,
+        icon: <Sparkles className="w-7 h-7 text-[#dcb36d]" />,
+        tips: "蒜末一定要炒到金黄才够香!这步是弥补没有洋葱的关键,别心急。"
+      },
+      {
+        title: "炒透蘑菇 (鲜味释放)",
+        desc: "转大火,倒入白蘑菇片持续翻炒至变软、出水并收干,边缘微焦。蘑菇的水分炒干,鲜味就浓缩了。",
+        timer: 180, // 3 mins
+        icon: <Soup className="w-7 h-7 text-[#5c554b]" />,
+        tips: "蘑菇要炒透!水分炒干、表面微焦,鲜味才能充分释放,这是天然的味觉增强剂。"
+      },
+      {
+        title: "融合收汁 (完美收官)",
+        desc: "牛肉回锅与蘑菇翻匀。淋入调好的黑椒酱汁,中大火快炒1分钟入味。缓缓淋入水淀粉快速翻炒至汤汁浓稠明亮。加青红椒(如有)翻几下即可出锅。",
+        timer: 90,
+        icon: <CheckCircle className="w-7 h-7 text-[#7a8a68]" />,
+        tips: "勾芡要缓缓淋入边倒边炒,汤汁才会均匀浓稠。出锅前可尝味,觉得辣可再补点糖或蚝油。"
+      }
+    ]
+  },
+  {
     id: 'black-pepper-beef',
     title: "洋葱黑椒牛肉",
     subtitle: "Frank's Home Kitchen",
